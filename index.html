@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebDesign Collections</title>
+  </head>
+  <body>
+    <style>
+      a {
+        text-decoration: none;
+      }
+    </style>
+    <div>
+      <h1>WebDesign Collection</h1>
+      <p>
+        Free static design. Open page source in developer console to copy the
+        code :D
+      </p>
+      <p>
+        contribute on
+        <a
+          href="https://github.com/nidexingg/webdesigncollection"
+          target="_blank"
+          >GitHub</a
+        > if you want to. Thanks in advance.
+      </p>
+      <input
+        id="searchbar"
+        onkeyup="handleSearch()"
+        type="text"
+        placeholder="search for item... (Ctrl + K)"
+      />
+      <script>
+        const searchBar = document.getElementById("searchbar");
+        document.addEventListener("keydown", (e) => {
+          if (
+            (e.ctrlKey && e.key.toLowerCase() === "k") ||
+            (e.key.toLowerCase() === "k" && e.metaKey) ||
+            e.key.toLowerCase() === "/"
+          ) {
+            e.preventDefault();
+            searchBar.focus();
+          }
+        });
+        function handleSearch() {
+          let input = document.getElementById("searchbar").value;
+          input = input.toLowerCase();
+          let x = document.getElementsByClassName("items");
+
+          for (i = 0; i < x.length; i++) {
+            if (!x[i].innerHTML.toLowerCase().includes(input)) {
+              x[i].style.display = "none";
+            } else {
+              x[i].style.display = "list-item";
+            }
+          }
+        }
+      </script>
+      <ul>
+        <li class="items">
+          <a href="./the-sparkliest-sparkle/" target="_blank"
+            >the-sparkliest-sparkle</a
+          >
+        </li>
+        <li class="items">
+          <a
+            href="./text-scroll-and-hover-effect-with-gsap-and-clip/"
+            target="_blank"
+            >text-scroll-and-hover-effect-with-gsap-and-clip</a
+          >
+        </li>
+        <li class="items">
+          <a href="./responsive-table/" target="_blank"> responsive-table </a>
+        </li>
+        <li class="items">
+          <a href="./responsive-image-carousel/" target="_blank"
+            >responsive-image-carousel</a
+          >
+        </li>
+        <li class="items">
+          <a href="./magic-mouse-effect-star/" target="_blank">
+            magic-mouse-effect-star</a
+          >
+        </li>
+        <li class="items">
+          <a href="./glowy-hover-effect/" target="_blank">
+            glowy-hover-effect</a
+          >
+        </li>
+        <li class="items">
+          <a
+            href="./future-sticky-navigation-with-glass-effect/"
+            target="_blank"
+            >future-sticky-navigation-with-glass-effect
+          </a>
+        </li>
+        <li class="items">
+          <a href="./character-showcase-gallery/" target="_blank">
+            character-showcase-gallery</a
+          >
+        </li>
+        <li class="items">
+          <a href="./45-buttons-style/" target="_blank"> 45-buttons-style</a>
+        </li>
+        <li class="items">
+          <a href="./3d-globe-threejs-with-location-pointer/" target="_blank"
+            >3d-globe-threejs-with-location-pointer
+          </a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

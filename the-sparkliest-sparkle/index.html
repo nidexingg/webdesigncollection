@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        :root {
+        --sparkle-base: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cfilter id='f' width='1' height='1' x='0' y='0' color-interpolation-filters='sRGB' primitiveUnits='objectBoundingBox'%3E%3CfeTurbulence baseFrequency='1' stitchTiles='stitch' /%3E%3CfeComponentTransfer result='sparkleBase'%3E%3CfeFuncA amplitude='50' exponent='3' type='gamma' /%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Cpath d='M0 0h100v100H0z' filter='url(%23f)' /%3E%3C/svg%3E");
+        --cloud-base: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cfilter id='f' width='1' height='1' x='0' y='0' color-interpolation-filters='sRGB' primitiveUnits='objectBoundingBox'%3E%3CfeTurbulence baseFrequency='.02' stitchTiles='stitch' type='fractalNoise' /%3E%3CfeColorMatrix type='hueRotate'%3E%3Canimate attributeName='values' dur='3s' from='0' repeatCount='indefinite' to='360' /%3E%3C/feColorMatrix%3E%3CfeColorMatrix values='1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0' /%3E%3CfeComponentTransfer%3E%3CfeFuncA amplitude='3' exponent='2' type='gamma' /%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Cpath d='M0 0h100v100H0z' filter='url(%23f)' /%3E%3C/svg%3E%0A");
+
+        
+        --mask-size: 600px;
+        --cloud-offset-x: calc(-1 * var(--mask-size));
+        --base-color: slateblue;
+
+        /*   --brand-color-fg: #fff0c4;
+        --brand-color-bg: #92a6ff; */
+            --brand-color-bg: #c8d2ff;
+        --brand-color-fg: #fff7e1;
+        --cloud-blend-mode: normal;
+        --cloud-opacity: 0.7;
+        }
+
+        .sparkles {
+        /*   position: relative; */
+        contain: paint;
+        background-color: var(--brand-color-bg, var(--base-color));
+        }
+
+        .sparkles:before,
+        .sparkles:after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        }
+
+        .sparkles:before {
+        opacity: var(--cloud-opacity);
+        mask: var(--cloud-base);
+        background-color: var(--brand-color-fg, white);
+        mix-blend-mode: var(--cloud-blend-mode, overlay);
+        mask-size: var(--mask-size);
+        mask-position: var(--cloud-offset-x) 0;
+        animation: slide 8s linear infinite;
+        }
+
+        @keyframes slide {
+        to {
+            mask-position: 0 0;
+        }
+        }
+
+        .sparkles:after {
+        background-color: #fff;
+        mix-blend-mode: overlay;
+        mask: var(--cloud-base), var(--sparkle-base), var(--sparkle-base);
+        mask-size: var(--mask-size), 250px, 125px;
+        mask-position: var(--cloud-offset-x) 0, 0 0, 0 125px;
+        -webkit-mask-composite: source-in;
+        mask-composite: intersect;
+        animation: pulse 3.5s ease infinite, slide 8s linear infinite;
+        }
+
+        @keyframes pulse {
+        0%,
+        100% {
+            opacity: 0.5;
+        }
+        25%,
+        75% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.75;
+        }
+        }
+
+        /* @keyframes pulse {
+        0%, 100%  {
+            opacity: 0.5;
+        }
+        50% {
+            opacity: 1;
+        }
+        } */
+
+        body {
+        margin: 0;
+        }
+
+        .square {
+        height: 160px;
+        /*   width: 100%; */
+        aspect-ratio: 1;
+        margin: 24px;
+        border-radius: 8px;
+        }
+
+        button {
+        margin: 24px;
+        min-width: 64px;
+        min-height: 36px;
+        padding-inline: 24px;
+        border-radius: 4px;
+        color: black;
+        outline: none;
+        border-width: 0;
+        font-size: 0.875rem;
+        letter-spacing: 0.0107142857em;
+        font-weight: 500;
+        text-transform: none;
+        cursor: pointer;
+        }
+
+        .wide-btn {
+        min-width: 400px;
+        }
+    </style>
+    <div class="sparkles square"></div>
+    <div class="sparkles square" style="width: 400px"></div>
+    <button class="sparkles">Sparkle</button>
+    <button class="sparkles wide-btn">Sparkle</button>    
+</body>
+</html>

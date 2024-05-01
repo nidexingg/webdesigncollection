@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;400;500;600&display=swap');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css');
+
+        body {
+        font-family: 'Inter', sans-serif;
+        display: flex;
+        justify-content: center;
+        padding: 40px 0;
+        color: #111827;
+        }
+
+        .wrap-table {
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        overflow-x: auto;
+        width: 100%;
+        container-type: inline-size;
+        container-name: table;
+        }
+
+        table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 14px;
+        }
+
+        th {
+        font-weight: 700;
+        color: #374151;
+        font-size: 14px;
+        padding: 12px 14px;
+        text-align: left;
+        background: #f9fafb;
+        border-bottom: 1px solid #e5e7eb;
+        }
+
+        td {
+        padding: 12px 14px;
+        border-bottom: 1px solid #e5e7eb;
+        background: #fff;
+        }
+
+        .user__photo {
+        width: 48px;
+        height: 48px;
+        object-fit: cover;
+        border-radius: 100px;
+        }
+
+        .user__info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        }
+
+        .user__name {
+        font-size: 14px;
+        font-weight: 600;
+        color: #111827;
+        }
+
+        .user__email {
+        font-size: 12px;
+        color: #4b5563;
+        }
+
+        .user__badge {
+        width: max-content;
+        background: #dcfce7;
+        border-radius: 9px;
+        border: 1px solid #15803d;
+        color: #15803d;
+        padding: 4px 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        font-weight: 500;
+        }
+
+        .user__badge:before {
+        content: "";
+        width: 4px;
+        height: 4px;
+        border-radius: 100px;
+        background: #15803d;
+        display: block;
+        }
+
+        .user__badge_pending {
+        background: #fefce8;
+        color: #8a551c;
+        border-color: #f4e7c5;
+        }
+
+        .user__badge_pending:before {
+        background: #8a551c;
+        }
+
+        .user__badge_unpaid {
+        background: #fef2f2;
+        color: #b91c1c;
+        border-color: #fbe0e0;
+        }
+
+        .user__badge_unpaid:before {
+        background: #b91c1c;
+        }
+
+        .user__edit {
+        display: block;
+        padding: 4px 12px;
+        text-decoration: none;
+        }
+
+        input {
+        display: none;
+        }
+
+        input + span {
+        display: block;
+        width: 16px;
+        height: 16px;
+        border: 2px solid #d1d5db;
+        border-radius: 4px;
+        transition: .3s;
+        cursor: pointer;
+        }
+
+        input + span > svg {
+        opacity: 0;
+        }
+
+        input:checked + span {
+        background: #dcfce7;
+        border: 2px solid #15803d;
+        color: #15803d;
+        }
+
+        input:checked + span > svg {
+        opacity: 1;
+        }
+
+        progress {
+        display: block;
+        width: 100px;
+        height: 7px;
+        -webkit-appearance: none;
+        border-radius: 10px;
+        }
+
+        progress::-webkit-progress-bar {
+        background-color: #eee;
+        border-radius: 10px;
+        }
+
+        progress::-webkit-progress-value {
+        background-color: #6C55F9;
+        border-radius: 10px;
+        }
+
+        .user__edit {
+        padding: 8px 12px;
+        border-radius: 12px;
+        background: #f4f4f4;
+        color: #000000;
+        text-align: center;
+        font-weight: 500;
+        transition: all 0.2s;
+        }
+
+        .user__edit:hover {
+        padding: 8px 12px;
+        border-radius: 12px;
+        background: #000;
+        color: #fff;
+        text-align: center;
+        font-weight: 500;
+        }
+
+        @container table (min-width: 400px) {
+            .sticky-col {
+            position: sticky;
+            left: 0;
+        }
+        
+        .sticky-col-right {
+            right: 0;
+        }
+        }
+
+        @container table (max-width: 400px) {
+        td::before {
+            content: attr(data-label);
+            font-weight: 700;
+            color: #374151;
+            font-size: 14px;  
+        }
+        
+        label {
+            display: none;
+        }
+        
+        td {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: none;
+        }
+        
+        td:first-child {
+            background: #f9fafb;
+        }
+        
+        th {
+            display: none;
+        }
+        }
+
+        #right_panel {
+        width: 1000px;
+        position:relative;
+        }
+
+        #btn_resize {
+        cursor: ew-resize;
+        width: 14px;
+        height: 100%;
+        position: absolute;
+        top:0;
+        left: calc(100% + 3px);
+        background: #fff;
+        display: flex;
+        align-items: start;
+        justify-content: center;
+        border: none;
+        padding: 0;
+        }
+
+        #btn_resize span {
+        background: #94a3b8;
+        height: 32px;
+        width: 4px;
+        display: block;
+        border-radius: 10px;
+        }
+        
+    </style>
+    <div id="right_panel">
+        <div class="wrap-table">
+          <table>
+            <thead>
+              <tr">
+                <!-- <th scope="col" class="sticky-col"><i class="fa fa-user"></i> Contributor</th> -->
+                <th scope="col" class="sticky-col">
+                    <div class="input-group sm-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="border-radius: 10px 0 0 10px;"><i class="fa-solid fa-magnifying-glass"></i></span>
+                        </div>
+                        <input type="text" id="searchbar" onkeyup="search_user()" class="form-control" placeholder="Search" style="border-radius: 0 10px 10px 0;">
+                    </div>
+                </th>
+                <th scope="col">Status</th>
+                <th scope="col">Contribution</th>
+                <th scope="col">Role</th>
+                <th scope="col">Progress</th>
+                <th scope="col">Date</th>
+                <th scope="col" class="sticky-col sticky-col-right">Contact</th>
+              </tr>
+            </thead>
+            
+            <tbody id="list">
+              <tr class="user-list">
+                <td class="sticky-col" scope="row" data-label="Contributor">
+                  <div class="user__info">
+                     <img class="user__photo" src="https://avatars.githubusercontent.com/u/117574639?v=4" alt="">
+                    <div>
+                      <div class="user__name">Chandara H. Wei</div>
+                      <div class="user__email">nidexingg@mariazona.com</div>
+                    </div>
+                  </div>
+                </td>
+                <td data-label="Status">
+                  <div class="user__badge">Enrolled</div>
+                </td>
+                <td data-label="Course">
+                  <span style="text-align: right;">
+                    HTML <br>
+                    JavaScript
+                  </span>
+                </td>
+                <td data-label="Enrolled">Member</td>
+                <td data-label="Progress">
+                  <progress value="32" max="100"></progress>
+                </td>
+                <td data-label="Date">9/08/2023</td>
+                <td data-label="Actions" class="sticky-col sticky-col-right">
+                  <a href="#" class="user__edit"><i class="fa-brands fa-x-twitter"></i> Follow</a>
+                </td>
+              </tr>
+              <tr class="user-list">
+                <td class="sticky-col" scope="row" data-label="Customer">
+                  <div class="user__info">
+                     <img class="user__photo" src="https://t4.ftcdn.net/jpg/02/14/74/61/360_F_214746128_31JkeaP6rU0NzzzdFC4khGkmqc8noe6h.jpg" alt="">
+                    <div>
+                      <div class="user__name">Marvin McKinney</div>
+                      <div class="user__email">marvin@example.com</div>
+                    </div>
+                  </div>
+                </td>
+                <td data-label="Status">
+                  <div class="user__badge">Enrolled</div>
+                </td>
+                <td data-label="Course">
+                  <span>CSS</span>
+                </td>
+                <td data-label="Enrolled">Member</td>
+                <td data-label="Progress">
+                  <progress value="56" max="100"></progress>
+                </td>
+                <td data-label="Date">3/13/2023</td>
+                <td data-label="Actions" class="sticky-col sticky-col-right">
+                    <a href="#" class="user__edit"><i class="fa-brands fa-x-twitter"></i> Follow</a>
+                </td>
+              </tr>
+              <tr class="user-list">
+                <td class="sticky-col" scope="row" data-label="Customer">
+                  <div class="user__info">
+                    
+                     <img class="user__photo" src="https://img.freepik.com/free-photo/female-looking-directly-into-camera_273609-12389.jpg?t=st=1698951187~exp=1698951787~hmac=56a4af748044a4b82323def79882a55ac39f150aea6e1738cba45a52f3e9563a" alt="">
+                    <div>
+                      <div class="user__name">Alma Lawson</div>
+                      <div class="user__email">alma@example.com</div>
+                    </div>
+                  </div>
+                </td>
+                <td data-label="Status">
+                  <div class="user__badge user__badge_unpaid">Not paid</div>
+                </td>
+                <td data-label="Course">
+                  <span>Ruby on Rails</span>
+                </td>
+                <td data-label="Enrolled">Member</td>
+                <td data-label="Progress">
+                  <progress value="12" max="100"></progress>
+                </td>
+                <td data-label="Date">10/02/2023</td>
+                <td data-label="Actions" class="sticky-col sticky-col-right">
+                    <a href="#" class="user__edit"><i class="fa-brands fa-x-twitter"></i> Follow</a>
+                </td>
+              </tr>
+              <tr class="user-list">
+                <td class="sticky-col" scope="row" data-label="Customer">
+                  <div class="user__info">
+                     <img class="user__photo" src="https://as2.ftcdn.net/v2/jpg/02/24/86/95/1000_F_224869519_aRaeLneqALfPNBzg0xxMZXghtvBXkfIA.jpg" alt="">
+                    <div>
+                      <div class="user__name">Floyd Miles</div>
+                      <div class="user__email">floyd@example.com</div>
+                    </div>
+                  </div>
+                </td>
+                <td data-label="Status">
+                  <div class="user__badge">Enrolled</div>
+                </td>
+                <td data-label="Course">
+                  <span>CSS</span>
+                </td>
+                <td data-label="Enrolled">Member</td>
+                <td data-label="Progress">
+                  <progress value="100" max="100"></progress>
+                </td>
+                <td data-label="Date">6/12/2023</td>
+                <td data-label="Actions" class="sticky-col sticky-col-right">
+                    <a href="#" class="user__edit"><i class="fa-brands fa-x-twitter"></i> Follow</a>
+                </td>
+              </tr>
+              <tr class="user-list">
+                <td class="sticky-col" scope="row" data-label="Customer">
+                  <div class="user__info">
+                     <img class="user__photo" src="https://img.freepik.com/free-photo/pretty-smiling-joyfully-female-with-fair-hair-dressed-casually-looking-with-satisfaction_176420-15187.jpg?t=st=1698950906~exp=1698951506~hmac=d7a71b36eec872667dc27ea767679dc74adf02bff3acb18a1b1523b63843fdfa" alt="">
+                    <div>
+                      <div class="user__name">Georgia Young</div>
+                      <div class="user__email">georgia@example.com</div>
+                    </div>
+                  </div>
+                </td>
+                <td data-label="Status">
+                  <div class="user__badge user__badge_pending">Pending</div>
+                </td>
+                <td data-label="Course">
+                  <span>JavaScript</span>
+                </td>
+                <td data-label="Enrolled">Member</td>
+                <td data-label="Progress">
+                  <progress value="1" max="100"></progress>
+                </td>
+                <td data-label="Date">9/29/2023</td>
+                <td data-label="Actions" class="sticky-col sticky-col-right">
+                    <a href="#" class="user__edit"><i class="fa-brands fa-x-twitter"></i> Follow</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- <button id="btn_resize">
+          <span></span>
+        </button> -->
+    </div>
+    <script>
+         const BORDER_SIZE = 14;
+         const panel = document.getElementById("right_panel");
+
+         let m_pos;
+         function resize(e){
+         const dx = m_pos - e.x;
+         m_pos = e.x;
+         panel.style.width = (parseInt(getComputedStyle(panel, '').width) - dx) + "px";
+         }
+
+         panel.addEventListener("mousedown", function(e){
+         if (e.offsetX < BORDER_SIZE) {
+             m_pos = e.x;
+             document.addEventListener("mousemove", resize, false);
+         }
+         }, false);
+
+         document.addEventListener("mouseup", function(){
+            document.removeEventListener("mousemove", resize, false);
+        }, false);
+
+        function search_user() {
+            let input = document.getElementById('searchbar').value
+            input=input.toLowerCase();
+            let x = document.getElementsByClassName('user-list');
+            
+            for (i = 0; i < x.length; i++) {
+                if (!x[i].innerHTML.toLowerCase().includes(input)) {
+                    x[i].style.display="none";
+                }
+                else {
+                    x[i].style.display="";				
+                }
+            }
+        }
+    </script>
+</body>
+</html>
